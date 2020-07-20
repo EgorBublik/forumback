@@ -35,4 +35,4 @@ app.get("/questions", function(req, res){
     });
 });
 
-app.listen(process.env.Port, () => console.log('port '+process.env.Port))
+app.listen(process.env.Port, process.env.Host, () => console.log('port '+process.env.Port))
