@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require("mysql2");
-let cors = require('cors')
+let cors = require('cors');
+require('dotenv').config();
 
 
 const app = express();
@@ -10,18 +11,18 @@ app.use(bodyParser.json());
 app.use(cors())
 
 const connection = mysql.createConnection({
-    host: "localhost",
-    user: "ebublik",
-    database: "ebublik",
-    password: "si6phaexee4ahSha",
-    port: "3306"
+    host: process.env.DBHost,
+    user: process.env.DBUser,
+    database: process.env.DBName,
+    password: process.env.DBPassword,
+    port: process.env.DBPort
 });
 
 connection.connect(function (err) {
     if (err) {
-        return console.error("Ошибка: " + err.message);
+        return console.error("Error: " + err.message);
     } else {
-        console.log("Подключение к серверу MySQL успешно установлено");
+        console.log("Mysql succesfully connected");
     }
 });
 
@@ -34,4 +35,4 @@ app.get("/questions", function(req, res){
     });
 });
 
-app.listen(3005, () => console.log('port 3005'))
+app.listen(process.env.Port, () => console.log('port '+process.env.Port))
