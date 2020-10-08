@@ -4,7 +4,6 @@ const mysql = require("mysql2");
 let cors = require('cors');
 require('dotenv').config();
 
-
 const app = express();
 app.use(bodyParser.json());
 
@@ -26,13 +25,23 @@ connection.connect(function (err) {
     }
 });
 
-app.get("/questions", function(req, res){
-    connection.query("SELECT * FROM questions", function(err, data) {
-        if(err) return console.log(err);
+app.get("/questions", function (req, res) {
+    connection.query("SELECT * FROM questions", function (err, data) {
+        if (err) return console.log(err);
         res.send({
             questions: data
         });
     });
 });
 
-app.listen(process.env.Port, process.env.Host, () => console.log('port '+process.env.Port))
+app.post("/questions", function (req, res) {
+    // res.setHeader('Access-Control-Allow-Origin', '*');
+    connection.query(`INSERT INTO questions (question) VALUES ("${req.body.question}")`, function (err, data) {
+        if (err) return console.log(err);
+        res.send({
+
+        });
+    });
+})
+
+app.listen(process.env.Port, process.env.Host, () => console.log('port ' + process.env.Port))
