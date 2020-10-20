@@ -35,7 +35,7 @@ app.get("/questions", function (req, res) {
 });
 
 app.post("/questions", function (req, res) {
-    // res.setHeader('Access-Control-Allow-Origin', '*');
+    console.log(req.body)
     connection.query(`INSERT INTO questions (question) VALUES ("${req.body.question}")`, function (err, data) {
         if (err) return console.log(err);
         res.send({
@@ -43,5 +43,15 @@ app.post("/questions", function (req, res) {
         });
     });
 })
+
+app.delete("/questions", function (req, res) {
+    connection.query(`DELETE FROM questions WHERE id=${req.body.id}`, function (err, data) {
+        if (err) return console.log(err);
+        res.send({
+
+        });
+    });
+})
+
 
 app.listen(process.env.Port, process.env.Host, () => console.log('port ' + process.env.Port))
